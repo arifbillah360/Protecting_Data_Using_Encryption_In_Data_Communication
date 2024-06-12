@@ -1,1 +1,134 @@
+#include <stdio.h>
+#include <math.h>
+char main_Data[100];
+char Encoded[100];
+int Odd_parity_Hamming(int a,int b)
+{
+int count=0,i,j;
+i=a-1;
+while(i<b)
+{
+for(j=i;j<i+a;j++)
+{
+if(Encoded[j] == '1')
+count++;
+}
+i=i+2*a;
+}
+if(count%2 == 0)
+return '0';
+else
+return '1';
+}
 
+
+
+void main()
+{
+int i=0,G=0,R=0,Z,j,k;
+printf("Enter the hamming data in number: ");
+scanf("%s", main_Data);
+printf("\n");
+while( main_Data[i]!='\0')
+{
+ G++;
+ i++;
+}
+i=0;
+while(G>(int)pow(3,i)-(i+1))
+{
+R++;
+i++;
+}
+
+Z = R + G;
+j=k=0;
+for(i=0;i<Z;i++)
+{
+if(i==((int)pow(3,k)-1))
+{
+Encoded[i]=0;
+k++;
+}
+else
+{
+Encoded[i]=main_Data[j];
+j++;
+}
+}
+for(i=0;i<R;i++)
+{
+int X = (int)pow(3,i);
+int Y = Odd_parity_Hamming(X,Z);
+Encoded[X-1]= Y;
+}
+printf("Encoded data of Hamming: %s",Encoded);
+printf("\n");
+printf("\n");
+
+ char a[100],c[100];
+    printf("Enter the main data to sceure: ");
+    scanf("%s",a);
+    int r,s,Ro;
+
+   
+    i=0;
+    r=0;
+    while(a[i]!='\0'){
+    a[i] =a[i]+1;
+    i++;
+    r++;
+    }
+    printf("\n\nAfter encryption: %s",a);
+        Ro = strlen(a);
+    i=0;
+
+    while(Encoded[i]!='\0'){
+    c[i]=Encoded[i];
+    i++;
+    }
+int H=i;
+    j=i;
+
+
+    i=0;
+    while(a[i]!='\0'){
+    c[j]=a[i];
+    i++;
+    j++;
+    }
+
+    i=0;
+
+    while(Encoded[i] != '\0' ){
+    c[j]=Encoded[i];
+    i++;
+    j++;
+    }
+    H=j;
+
+    printf("\n\nStuffing: %s",c);
+
+
+    char d[100],e[100];
+    i=0;
+    while(i<Ro)
+    {
+        d[i]=c[Z];
+        i++;
+        Z++;
+    }
+
+d[i]='\0';
+
+    printf("\n\nThe de-stuffing data is: %s",d);
+
+    i=0;
+    while(d[i]!='\0'){
+    d[i] =d[i]-1;
+    i++;
+    }
+
+    printf("\n\nAfter decryption: %s",d);
+    printf("\n\n");
+}
